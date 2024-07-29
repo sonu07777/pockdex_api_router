@@ -1,0 +1,27 @@
+.show-data{
+    width: 100%;
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /* border: 2px solid rgba(5, 0, 0, 0.415); */
+    border-radius: 30px;
+    flex-direction: row;
+    flex-wrap: wrap;
+    column-gap:4rem;
+    row-gap: 4rem;
+}
+.control{
+    display: flex;
+    align-items:center;
+    justify-content: center;
+    margin:20px 0;
+    gap: 20px ;
+}
+
+.control button{
+    padding: 0.5rem 2rem;
+    font-size:large;
+    font-weight: 500;
+    border-radius: 10px;
+}

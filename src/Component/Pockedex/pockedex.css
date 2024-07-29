@@ -1,0 +1,11 @@
+.pockedex-wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    /* border: 1px solid red; */
+}
+#head-of-the-page{
+    font-size: xx-large;
+    margin: 2rem auto;
+}
