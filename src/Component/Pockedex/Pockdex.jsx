@@ -1,10 +1,11 @@
 import Search from "../Search/Search.jsx"
+import PockmonList from '../PockmonList/PockmonList.jsx'
 import "./pockedex.css"
 function pockedex(){
     return(
         <div className="pockedex-wrapper">
-            <span id="head-of-the-page">Pockdex</span>
             <Search/>
+            <PockmonList/>
         </div>
     )
 }

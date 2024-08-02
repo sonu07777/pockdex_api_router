@@ -1,19 +1,21 @@
-import { useState } from 'react'
-import Pockedex from './Component/Pockedex/Pockdex.jsx'
-import PockmonList from './Component/PockmonList/PockmonList.jsx'
+import { useState } from "react";
+import { Link } from "react-router-dom";
 
-import './App.css'
-
+import "./App.css";
+import CoustomRouter from "./Router/router.jsx";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [count, setCount] = useState(0);
 
   return (
-    <>
-      <Pockedex/>
-      <PockmonList/>
-    </>
-  )
+    <div className="app-wrapper">
+
+      <Link to="/">
+      <span id="head-of-the-page">Pockdex</span>
+      </Link>
+      <CoustomRouter />
+    </div >
+  );
 }
 
-export default App
+export default App;
