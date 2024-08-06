@@ -1,37 +1,37 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import "./pockimondetails.css"
+import usePokemonDetails from "../hooks/usePockimonDetails.js"
 
-function pockimondetails() {
+function pockimondetails({pokemonName }) {
   const { id } = useParams(); // Correctly destructuring the 'id' from params
-  const [data, setData] = useState({});
-  // console.log(id);
-  async function downloadPockimon() {
-    const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${id}`);
-    console.log(response.data);
-    const result = {
-      name: response.data.name,
-      height: response.data.height,
-      image: response.data.sprites.other.dream_world.front_default,
-      type:response.data.types.map((t)=>{return t.type.name})
-    };
-    setData(result);
-    console.log(result);
-  }
-  useEffect(() => {
-    downloadPockimon();
-  }, []);
+  const [pokemon] = usePokemonDetails(id, pokemonName);
+
   return (
     <div className="wrapper-pocki-details">
-      {/* <br /> */}
-      {/* <hr /> */}
-      <img src={data.image} alt="image is not loading due to your network" />
-      <div className="name">{data.name}</div>
-      <div className="Height"><span>Height:-</span>{data.height}</div>
-      <div className="type">{data.type ? data.type.map((p)=><div>{p}</div>) :"no type is present"}</div>
-    </div>
-  );
+    
+      <img src={pokemon.image} alt="image is not loading due to your network" />
+      <div className="name">{pokemon.name}</div>
+      <div className="Height"><span>Height:-</span>{pokemon.height}</div>
+      <div className="type">{pokemon.type ? pokemon.type.map((p)=><div>{p}</div>) :"no type is present"}</div>
+      
+    {/* </div> */}
+    {
+      pokemon.types && pokemon.similarPokemons && 
+      <div>
+          more {pokemon.types[0]} type pokemons
+
+          <ul>
+              {pokemon.similarPokemons.map((p) => <li key={p.pokemon.url}>{p.pokemon.name}</li>)}
+
+          </ul>
+      </div>
+    }
+</div>
+);
 }
 
 export default pockimondetails;
+
+
+

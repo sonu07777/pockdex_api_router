@@ -1,50 +1,9 @@
-import axios from "axios";
-import { useEffect, useState } from "react";
 import Pockmon from "../pockmon/pockmon.jsx";
 import "./pockimonList.css";
+import usePockimonList from "../hooks/usePockimonList.js";
 
 function pockmonList() {
-  
-  const [pockimon, setPockimon]= useState({
-    PockmonURL:"https://pokeapi.co/api/v2/pokemon",
-    pockimonList:[],
-    isLoading: true,
-    nextButton:"",
-    prevButton:""
-  })
-
-  async function getdata() {
-    setPockimon((state)=>({...state,isLoading:true}))
-    const response = await axios.get(pockimon.PockmonURL);
-    // console.log("the response is", response);
-    const pockmonResult = response.data.results;
-    // console.log(pockmonResult);
-
-    setPockimon((state)=>({...state,nextButton:response.data.next,prevButton:response.data.previous}))
-   
-    const pockmonResultPromise = pockmonResult.map(
-      (pockmon) => axios.get(pockmon.url) //it return a promise
-      // pockmon.url //-->Here we get only the array of url
-    );
-    // console.log(pockmonResultPromise);
-    const pockmonData = await axios.all(pockmonResultPromise); //.all returns a array
-    // console.log(pockmonData);
-    const result = pockmonData.map((pockdata) => {
-      const pockmon = pockdata.data;
-      return {
-        id: pockmon.id,
-        name: pockmon.name,
-        image: pockmon.sprites.other.dream_world.front_default,
-        types: pockmon.types,
-      };
-    });
-    setPockimon((state)=>({...state,pockimonList:result,isLoading:false}))
-    
-    console.log(result);
-  }
-  useEffect(() => {
-    getdata();
-  }, [pockimon.PockmonURL]);
+  const { pockimon, setPockimon } = usePockimonList();
   return (
     <>
       <div className="show-data">
@@ -55,7 +14,7 @@ function pockmonList() {
                 name={pockmon.name}
                 image={pockmon.image}
                 key={pockmon.id}
-                id= {pockmon.id}
+                id={pockmon.id}
               />
             ))}
       </div>
@@ -63,15 +22,18 @@ function pockmonList() {
       <div className="control">
         <button
           disabled={pockimon.prevButton == null}
-          onClick={() => {const seturl = pockimon.prevButton
-            setPockimon({...pockimon,PockmonURL:seturl})}}>
+          onClick={() => {
+            const seturl = pockimon.prevButton;
+            setPockimon({ ...pockimon, PockmonURL: seturl });
+          }}>
           prev
         </button>
         <button
           disabled={pockimon.nextButton == null}
-          onClick={() =>  {
-            const seturl = pockimon.nextButton
-            setPockimon({...pockimon,PockmonURL:seturl})}}>
+          onClick={() => {
+            const seturl = pockimon.nextButton;
+            setPockimon({ ...pockimon, PockmonURL: seturl });
+          }}>
           next
         </button>
       </div>
@@ -80,8 +42,6 @@ function pockmonList() {
 }
 export default pockmonList;
 
-
-
 // by using many useState
 
 // import axios from "axios";
@@ -89,16 +49,12 @@ export default pockmonList;
 // import Pockmon from "../pockmon/pockmon";
 // import "./pockimonList.css"
 
-
 // function pockmonList() {
 //   const [pockmonURL,setpockmonURL] = useState("https://pokeapi.co/api/v2/pokemon")
 //   const [pockmonList, setPockmonList] = useState([]);
 //   const [isLoading, setIsloading] = useState(true);
 //   const [nextButton,setnextButton]=useState("");
 //   const [prevButton,setprevButton]=useState("");
-
-
-
 
 //   async function getdata() {
 //     setIsloading(true)
@@ -109,11 +65,11 @@ export default pockmonList;
 //     setnextButton(response.data.next)
 //     setprevButton(response.data.previous)
 //     const pockmonResultPromise = pockmonResult.map((pockmon) =>
-//       axios.get(pockmon.url) //it return a promise 
+//       axios.get(pockmon.url) //it return a promise
 //       // pockmon.url //-->Here we get only the array of url
 //     );
 //     // console.log(pockmonResultPromise);
-//     const pockmonData = await axios.all(pockmonResultPromise);  //.all returns a array 
+//     const pockmonData = await axios.all(pockmonResultPromise);  //.all returns a array
 //     console.log(pockmonData);
 //     const result = pockmonData.map((pockdata) => {
 //       const pockmon = pockdata.data;
@@ -133,7 +89,7 @@ export default pockmonList;
 //   }, [pockmonURL]);
 //   return (
 //     <>
-//       <div className="show-data">{isLoading ? "Data Loading..." : 
+//       <div className="show-data">{isLoading ? "Data Loading..." :
 //         pockmonList.map((pockmon)=><Pockmon name={pockmon.name} image={pockmon.image} key={pockmon.id}/>)
 //         }</div>
 
